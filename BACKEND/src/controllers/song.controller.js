@@ -5,24 +5,38 @@ const uploadFile = require("../services/storage.service");
 async function songCreateController(req, res) {
   const file = req.file;
   // console.log(file);
-  const { mood, title } = req.body;
+  const { mood } = req.body;
 
-  const tags = await id3.read(file.buffer);
+  const tags = id3.read(file.buffer);
   // console.log(tags);
 
-  const songFile = await uploadFile({
-    buffer: file.buffer,
-    fileName: tags.title + ".mp3",
-    folderName: "cohort-2/moodify/songs",
-  });
+  // const songFile = await uploadFile({
+  //   buffer: file.buffer,
+  //   fileName: tags.title + ".mp3",
+  //   folderName: "cohort-2/moodify/songs",
+  // });
 
   // console.log(songFile)
 
-  const posterFile = await uploadFile({
-    buffer: tags.image.imageBuffer,
-    fileName: tags.title + ".jpeg",
-    folderName: "cohort-2/moodify/posters",
-  });
+  // const posterFile = await uploadFile({
+  //   buffer: tags.image.imageBuffer,
+  //   fileName: tags.title + ".jpeg",
+  //   folderName: "cohort-2/moodify/posters",
+  // });
+
+  const [songFile, posterFile] = await Promise.all([
+    uploadFile({
+      buffer: file.buffer,
+      fileName: tags.title + ".mp3",
+      folderName: "cohort-2/moodify/songs",
+    }),
+
+    uploadFile({
+      buffer: tags.image.imageBuffer,
+      fileName: tags.title + ".jpeg",
+      folderName: "cohort-2/moodify/posters",
+    }),
+  ]);
 
   const song = await songModle.create({
     url: songFile.url,
@@ -37,4 +51,17 @@ async function songCreateController(req, res) {
   });
 }
 
-module.exports = { songCreateController };
+async function getSongController(req, res) {
+  const { mood } = req.query;
+
+  const song = await songModle.findOne({
+    mood,
+  });
+
+  return res.status(200).json({
+    message: "Song fetched successfully",
+    song,
+  });
+}
+
+module.exports = { songCreateController, getSongController };
