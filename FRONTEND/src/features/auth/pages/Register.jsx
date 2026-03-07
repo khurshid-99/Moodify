@@ -17,7 +17,7 @@ const Register = () => {
       const success = await handleRegister({ username, email, password });
 
       if (success) {
-        navigate("/");
+        navigate("/login");
       }
     } catch (error) {
       console.log(error);

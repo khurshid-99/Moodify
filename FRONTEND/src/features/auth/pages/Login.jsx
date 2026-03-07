@@ -17,7 +17,7 @@ const Login = () => {
     const success = await handleLogin({ username, password });
     console.log(success);
     if (success) {
-      navigate("/home");
+      navigate("/");
     }
   }
 
@@ -25,6 +25,7 @@ const Login = () => {
     return (
       <main>
         <h1>Loding...</h1>
+        {console.log("Login")}
       </main>
     );
   }

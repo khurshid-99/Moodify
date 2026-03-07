@@ -1,26 +1,20 @@
-import { useContext, useEffect } from "react";
-import { AuthContext } from "../Auth.context";
 import { useAuth } from "../hooks/useAuth";
 import "../styles/home.scss";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 
 const Home = () => {
-  const { handleGetMe, handleLogout } = useAuth();
+  const { user, loding, handleLogout } = useAuth();
 
-  useEffect(() => {
-    handleGetMe();
-  }, []);
-
-  const context = useContext(AuthContext);
-  const { user, loding } = context;
   console.log(user);
   const navigate = useNavigate();
 
   async function handleLogoutSubmit() {
     const data = await handleLogout();
     console.log(data);
-    navigate("/");
+    navigate("/login");
   }
+
+  console.log("home")
 
   if (loding) {
     return (
@@ -31,12 +25,7 @@ const Home = () => {
   }
 
   if (!user) {
-    return (
-      <main>
-        <h1>Token not provided</h1>
-       <Link to={"/"} className="toggle button">Login</Link>
-      </main>
-    );
+    return <Navigate to={"/login"} />
   }
   return (
     <main className="home_page">
