@@ -17,7 +17,7 @@ const Login = () => {
     const success = await handleLogin({ username, password });
     console.log(success);
     if (success) {
-      navigate("/");
+      navigate("/home");
     }
   }
 

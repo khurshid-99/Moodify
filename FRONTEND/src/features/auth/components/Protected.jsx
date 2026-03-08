@@ -22,24 +22,3 @@ const Protected = ({ children }) => {
 
 export default Protected;
 
-
-// import { useAuth } from "../hooks/useAuth";
-// import { Navigate, useNavigate } from "react-router";
-
-
-// const Protected = ({ children }) => {
-//   const { user, loding } = useAuth();
-//   const navigate = useNavigate();
-
-//   if (loding) {
-//     return <h1>loading</h1>;
-//   }
-
-//   if (!user) {
-//     return <Navigate to="/login" />;
-//   }
-
-//   return children;
-// };
-
-// export default Protected;

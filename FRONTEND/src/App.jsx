@@ -3,11 +3,14 @@ import FaceExpression from "./features/Expression/components/FaceExpression";
 import { RouterProvider } from "react-router";
 import { router } from "./routes/App.router";
 import { AuthProvider } from "./features/auth/Auth.context";
+import { SongProvider } from "./features/home/song.context";
 
 const App = () => {
   return (
     <AuthProvider>
-      <RouterProvider router={router} />
+      <SongProvider>
+        <RouterProvider router={router} />
+      </SongProvider>
     </AuthProvider>
   );
 };

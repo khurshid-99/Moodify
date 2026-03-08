@@ -1,6 +1,6 @@
 import { useAuth } from "../hooks/useAuth";
 import "../styles/home.scss";
-import { Link, Navigate, useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 
 const Home = () => {
   const { user, loding, handleLogout } = useAuth();
